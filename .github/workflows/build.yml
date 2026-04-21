@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,13 +33,10 @@ jobs:
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
+        id: sign_apk
         with:
           releaseDirectory: app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
@@ -48,7 +48,10 @@ jobs:
 
       - name: Rename APK
         run: |
-          APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" -type f | head -1)
+          APK_FILE="${{ steps.sign_apk.outputs.signedReleaseFile }}"
+          if [ -z "$APK_FILE" ]; then
+            APK_FILE=$(find app/build/outputs/apk/release -name "*.apk" -type f | head -1)
+          fi
           cp "$APK_FILE" SubAudit.apk
 
       - name: Get version
@@ -56,12 +59,6 @@ jobs:
         run: |
           VERSION=$(grep 'versionName' app/build.gradle.kts | head -1 | sed 's/.*"\(.*\)".*/\1/')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Delete old release if exists
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release delete v${{ steps.version.outputs.version }} --yes || true
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
