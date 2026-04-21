@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material Design 3 Dark Theme Colors -->
+    <color name="md_primary">#FFA1D6A2</color>
+    <color name="md_on_primary">#FF00390A</color>
+    <color name="md_primary_container">#FF005318</color>
+    <color name="md_on_primary_container">#FFBDF1BB</color>
+
+    <color name="md_secondary">#FFB6CCB4</color>
+    <color name="md_on_secondary">#FF223523</color>
+    <color name="md_secondary_container">#FF384B38</color>
+    <color name="md_on_secondary_container">#FFD2E8CF</color>
+
+    <color name="md_tertiary">#FFA1CED4</color>
+    <color name="md_on_tertiary">#FF00363B</color>
+
+    <color name="md_error">#FFBBA3A3</color>
+    <color name="md_on_error">#FF601B1B</color>
+    <color name="md_error_container">#FF7D2E2E</color>
+
+    <color name="md_background">#FF1A1C1A</color>
+    <color name="md_on_background">#FFE2E3DD</color>
+
+    <color name="md_surface">#FF1A1C1A</color>
+    <color name="md_on_surface">#FFE2E3DD</color>
+    <color name="md_surface_variant">#FF424940</color>
+    <color name="md_on_surface_variant">#FFC2C9BD</color>
+
+    <color name="md_outline">#FF8C9389</color>
+    <color name="md_outline_variant">#FF424940</color>
+
+    <color name="md_inverse_surface">#FFE2E3DD</color>
+    <color name="md_inverse_on_surface">#FF2F312D</color>
+
+    <color name="md_inverse_primary">#FF006E2C</color>
+
+    <!-- Notification icon -->
+    <color name="notification_icon_color">@color/md_primary</color>
+</resources>
